@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: reddit-clone-service
+  labels:
+    app: reddit-clone
+spec:
+  type: NodePort
+  ports:
+  - port: 3000
+    targetPort: 3000
+    nodePort: 31000
+  selector:
+    app: reddit-clone
+
+#apiVersion: v1 #specify the Kubernetes API version that should be used to interpret the Service resource definition.
+#kind: Service # type of Kubernetes resource that is being defined.
+#metadata: #metadata field is used to provide metadata about the Service resource being defined.
+#  name: reddit-clone-service # name of the Service
+#  labels: #labels field can be used to organize and identify the Service, and can be used to select the Service using label selectors.
+#    app: reddit-clone #
+#spec: #spec field contains information about how the Service should be configured and how it should function.
+#  type: NodePort # type field in a Service YAML file is used to specify the type of the service being defined. Kubernetes assigns a port from a range specified by the administrator (by default, between 30000-32767) on each node in the cluster. The NodePort service then listens on that port and forwards traffic to the appropriate Pods associated with the service.Clients can then connect to the service by accessing any of the nodes in the cluster on the assigned port number.traffic should be forwarded to port on the pod(s) backing the service.
+#  ports: #spec.ports field defines the port that should be exposed by the Service 
+#  - port: 3000 #service listens on port  and routes traffic to the pods with the label
+#    targetPort: 3000 #targetPort field is used to specify the port number that the service should route traffic to on the pod(s) backing the service.,The targetPort field is often used in conjunction with the port field, which specifies the port number that the service should listen on. 
+#The targetPort field is optional and defaults to the value of the port field if it is not specified. However, it can be useful to specify targetPort explicitly in cases where the pod(s) backing the service are listening on a different port than the service is configured to listen on.
+#    nodePort: 31000 # the service will be accessible on port on any node in the cluster.Traffic that is sent to any node in the cluster on nodeport then will be forwarded to the reddit-clone-service service, which will then route the traffic to the pods with the given label, using the targetPort field.
+#  selector: #selector to specify which pods should be included as endpoints of the service.
+#    app: reddit-clone
+#When the service is created, Kubernetes will select all pods in the same namespace with the given label and include them as endpoints of the service. Any traffic that is sent to the service's IP address and port will be load balanced across the selected pods. If pods with the given label are added or removed from the cluster, the service's endpoints will be updated automatically to reflect the changes.

@@ -1,0 +1,54 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-reddit-app
+spec:
+  rules:
+  - host: "domain.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/test"
+        backend:
+          service:
+            name: reddit-clone-service
+            port:
+              number: 3000
+  - host: "*.domain.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/test"
+        backend:
+          service:
+            name: reddit-clone-service
+            port:
+              number: 3000
+
+#apiVersion: networking.k8s.io/v1 # API version for Kubernetes networking resources. "networking.k8s.io/v1", which indicates the first version of the Kubernetes networking API.The networking API is used to configure and manage networking resources in a Kubernetes cluster, such as Services, Ingresses, and Network Policies.
+#kind: Ingress #kind of Kubernetes resource being defined An Ingress is a Kubernetes resource that exposes HTTP and HTTPS routes from outside the cluster to services within the cluster. It allows external traffic to reach different services based on the URL path or hostname specified in the incoming request.By using an Ingress resource, you can configure a single IP address and port to serve multiple services, which can simplify network configuration and management in a Kubernetes cluster.
+#metadata: #metadata for the Ingress resource being defined 
+#  name: ingress-reddit-app # sets the name of the Ingress to "ingress-reddit-app".
+#spec: #"spec" section is where you define the desired state of the resource.
+#  rules: #the routing rules for incoming traffic.how incoming requests should be matched and routed to backend services.
+#  - host: "domain.com" #specifies the hostname that the rule should match on.
+#    http: #specifies the HTTP routing configuration for the rule, including the paths to match on and the backend service to route requests to.
+#      paths: #This line is used within the "rules" field of the Kubernetes Ingress resource, and it specifically defines the HTTP paths to match on for a given routing rule.Each "rule" in the "rules" field can include a "http" field, which in turn can include one or more "paths" fields. Each "path" field defines a specific HTTP path that the rule should match on, and specifies the backend service to route requests to for that path.
+#      - pathType: Prefix #the type of matching to use for the HTTP path defined in the "path" field."Prefix", which indicates that the path should be matched based on a prefix match. This means that any request with a URL path that begins with the specified path will match the rule.
+#        path: "/test" #HTTP request that has a URL path that starts with "/test" will match the rule,
+#        backend: #the request will be routed to the backend service
+#          service: #The backend service is specified using the "service" field, which contains the name of the service to route requests to
+#            name: reddit-clone-service #
+#            port:
+#              number: 3000 #port number on which the service is listening for requests
+#  - host: "*.domain.com"
+#    http:
+#      paths:
+#      - pathType: Prefix
+#        path: "/test"
+#        backend:
+#          service:
+#            name: reddit-clone-service
+#            port:
+#              number: 3000
+#By defining multiple rules within the "rules" field, you can configure the Ingress to route traffic to different backend services based on the incoming request's host or path.

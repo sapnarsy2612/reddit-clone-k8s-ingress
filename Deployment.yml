@@ -1,0 +1,21 @@
+apiVersion: apps/v1 #version of the Kubernetes API is used for the resource definition,composed of two parts: the group and the version,apps is the group and v1 is the version
+kind: Deployment #type of Kubernetes resource that is being defined,
+metadata: #store information about a Kubernetes object,name, namespace, labels, and annotations;name of the Deployment and any labels
+  name: reddit-clone-deployment #name field, which specifies the name of the Deployment
+  labels: #labels field is used to tag the Deployment with a label, which can be used for grouping or selecting objects
+    app: reddit-clone #Labels are key-value pairs that can be attached to Kubernetes objects,app label allows operators to easily group and manage related resources
+spec: #desired state of a Kubernetes object.number of replicas for a Deployment or the container image for a Pod,The Kubernetes API server will compare the current state of the object to the desired state specified in the spec field, and take actions to bring the object into the desired state if necessary.
+  replicas: 2 #replicas field, which specifies that the desired state of the Deployment is to have two replicas.
+  selector: #selector field is used to identify which Pods the Deployment should manage,
+    matchLablels: #match the labels of a Kubernetes object,used in combination with the selector field to identify which objects a Kubernetes controller should manage.
+      app: reddit-clone #selector field is used to specify that the Deployment should manage Pods that have a label with the key app and value reddit-clone
+  template: #define the desired state of a Kubernetes object
+    metadata: #metadata field is used to specify the labels that should be attached to the Pod
+      labels: #
+        app: reddit-clone
+    spec: #spec field is used to specify the containers that should run in the Pod.
+      containers: #containers is a field used in the spec of a Pod or a Deployment to define the containers that should run in the Pod or the Deployment.
+      - name: reddit-clone # name of the container,
+        image: sravtar/reddit-clone #container image that should be used to run the application.
+        ports: #ports is a field used in the spec of a Pod or a Deployment to define the network ports that should be exposed by the container running inside the Pod or the Deployment.
+        - containerPort: 3000 #containerPort field is used to specify the network port that should be used to access the application running inside the container.

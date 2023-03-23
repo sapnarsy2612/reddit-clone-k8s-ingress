@@ -1,3 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reddit-clone-deployment
+  labels:
+    app: reddit-clone
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: reddit-clone
+  template:
+    metadata:
+      labels:
+        app: reddit-clone
+    spec:
+      containers:
+      - name: reddit-clone
+        image: trainwithshubham/reddit-clone
+        ports:
+        - containerPort: 3000
+
 #apiVersion: apps/v1 #version of the Kubernetes API is used for the resource definition,composed of two parts: the group and the version,apps is the group and v1 is the version
 #kind: Deployment #type of Kubernetes resource that is being defined,
 #metadata: #store information about a Kubernetes object,name, namespace, labels, and annotations;name of the Deployment and any labels
